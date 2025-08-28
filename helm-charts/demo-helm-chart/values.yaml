@@ -1,0 +1,47 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: "1.21"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false # Tạm thời tắt ingress trong demo này
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: demo-app.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+config:
+  DATABASE_URL: "postgres://localhost:5432/myapp"
+  REDIS_URL: "redis://localhost:6379"
+
+secrets:
+  DATABASE_PASSWORD: "supersecret"
+  API_KEY: "my-secret-key"
+
+env:
+  - name: DATABASE_URL
+    valueFrom:
+      configMapKeyRef:
+        key: DATABASE_URL
+  - name: REDIS_URL
+    valueFrom:
+      configMapKeyRef:
+        key: REDIS_URL
+  - name: DATABASE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        key: DATABASE_PASSWORD
+  - name: API_KEY
+    valueFrom:
+      secretKeyRef:
+        key: API_KEY
