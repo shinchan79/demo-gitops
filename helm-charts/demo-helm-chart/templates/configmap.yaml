@@ -6,6 +6,6 @@ metadata:
   labels:
     {{- include "demo-app.labels" . | nindent 4 }}
 data:
-  {{- range $key, $value := .Values.config }}
+{{- range $key, $value := .Values.config }}
   {{ $key }}: {{ $value | quote }}
-  {{- end }}
+{{- end }}

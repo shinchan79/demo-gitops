@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/shinchan79/demo-gitops.git
-    targetRevision: main
+    targetRevision: master
     path: helm-charts/demo-helm-chart
   destination:
     server: https://kubernetes.default.svc
